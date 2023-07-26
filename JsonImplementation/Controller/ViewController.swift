@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     func fetchAlbumsData() {
         model.fetchAlbums { [weak self] error in // Fetch albums data from the model asynchronously
             if let error = error {
-                print("Error fetching data: \(error.localizedDescription)") 
+                print("Error fetching data: \(error.localizedDescription)")
             } else {
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
