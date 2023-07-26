@@ -9,16 +9,25 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var tableView: UITableView!
     
-    var model: AlbumModel = AlbumModel()
-    var expandedRows: Set<Int> = []
+    
+    // MARK: - Properties
+    
+    var model: AlbumModel = AlbumModel() // Instance of the AlbumModel class to manage album data
+    var expandedRows: Set<Int> = []     // A set to keep track of expanded rows per section
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         fetchAlbumsData()
     }
+    
+    // MARK: - Setup Table View
     
     func setupTableView() {
         tableView.delegate = self
@@ -27,10 +36,12 @@ class ViewController: UIViewController {
         view.addSubview(tableView)
     }
     
+    // MARK: - Fetch Albums Data
+    
     func fetchAlbumsData() {
-        model.fetchAlbums { [weak self] error in
+        model.fetchAlbums { [weak self] error in // Fetch albums data from the model asynchronously
             if let error = error {
-                print("Error fetching data: \(error.localizedDescription)")
+                print("Error fetching data: \(error.localizedDescription)") 
             } else {
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
@@ -40,6 +51,7 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - Table View Delegate and Data Source Extensions
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
