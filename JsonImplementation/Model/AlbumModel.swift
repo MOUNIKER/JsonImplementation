@@ -26,13 +26,28 @@ class AlbumModel {
     // MARK: - Fetch Albums
     
     func fetchAlbums(completion: @escaping (Error?) -> Void) {
+        //  Create URL separately
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/albums") else {
             completion(NSError(domain: "Invalid URL", code: 0, userInfo: nil))
             return
         }
         
-        // Make a network request to fetch albums data
-        URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+        //  Create URL Request
+        var urlRequest = URLRequest(url: url)
+        
+        // Set HTTP method to GET
+        urlRequest.httpMethod = "GET"
+        
+        // Set httpBody to nil
+        urlRequest.httpBody = nil
+        
+        // Create URLSessionConfiguration with timeout property
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 30 // Set the desired timeout value (in seconds)
+        
+        //  Create URLSession and resume the task
+        let session = URLSession(configuration: config)
+        let task = session.dataTask(with: urlRequest) { [weak self] (data, response, error) in
             guard let data = data, error == nil else {
                 completion(error)
                 return
@@ -46,7 +61,8 @@ class AlbumModel {
             } catch {
                 completion(error)
             }
-        }.resume()
+        }
+        task.resume()
     }
     
     // MARK: - Sort Albums and Group

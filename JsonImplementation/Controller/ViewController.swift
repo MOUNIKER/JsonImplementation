@@ -71,9 +71,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.row == 0 {
             cell.textLabel?.text = "User ID: \(userId)"
+            cell.textLabel?.textColor = UIColor.black
         } else {
             let albumData = userAlbumData[indexPath.row - 1]
             cell.textLabel?.text = "ID: \(albumData.id)\nTitle: \(albumData.title)"
+            cell.textLabel?.textColor = UIColor.systemBlue
             cell.textLabel?.numberOfLines = 0
         }
         return cell
